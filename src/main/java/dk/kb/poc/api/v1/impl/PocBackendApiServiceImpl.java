@@ -2,7 +2,7 @@ package dk.kb.poc.api.v1.impl;
 
 import dk.kb.poc.LibraryFacade;
 import dk.kb.poc.api.v1.PocBackendApi;
-import dk.kb.poc.model.v1.BookDto;
+import dk.kb.poc.model.v1.InternalBookDto;
 import dk.kb.poc.webservice.ExportWriter;
 import dk.kb.poc.webservice.ExportWriterFactory;
 import dk.kb.poc.webservice.exception.InternalServiceException;
@@ -73,24 +73,24 @@ public class PocBackendApiServiceImpl implements PocBackendApi {
     /**
      * Add or update a single book
      * 
-     * @param bookDto: Add or update a single book
+     * @param InternalBookDto: Add or update a single book
      * 
      * @return <ul>
-      *   <li>code = 200, message = "If the book was added successfully", response = BookDto.class</li>
+      *   <li>code = 200, message = "If the book was added successfully", response = InternalBookDto.class</li>
       *   </ul>
       * @throws ServiceException when other http codes should be returned
       *
       * @implNote return will always produce a HTTP 200 code. Throw ServiceException if you need to return other codes
      */
     @Override
-    public BookDto addBook(BookDto bookDto) throws ServiceException {
-        log.info("addBook({}) begin", bookDto);
+    public InternalBookDto addBook(InternalBookDto InternalBookDto) throws ServiceException {
+        log.info("addBook({}) begin", InternalBookDto);
         try {
-            return LibraryFacade.addBook(bookDto);
+            return LibraryFacade.addBook(InternalBookDto);
         } catch (Exception e){
             throw handleException(e);
         } finally {
-            log.info("addBook({}) finish", bookDto);
+            log.info("addBook({}) finish", InternalBookDto);
         }
     }
 
@@ -125,7 +125,7 @@ public class PocBackendApiServiceImpl implements PocBackendApi {
      * @param id: The ID for the book to retrieve
      * 
      * @return <ul>
-      *   <li>code = 200, message = "JSON-compliant representation of the Book.", response = BookDto.class</li>
+      *   <li>code = 200, message = "JSON-compliant representation of the Book.", response = InternalBookDto.class</li>
       *   <li>code = 404, message = "Not found"</li>
       *   </ul>
       * @throws ServiceException when other http codes should be returned
@@ -133,7 +133,7 @@ public class PocBackendApiServiceImpl implements PocBackendApi {
       * @implNote return will always produce a HTTP 200 code. Throw ServiceException if you need to return other codes
      */
     @Override
-    public BookDto getBook(String id) throws ServiceException {
+    public InternalBookDto getBook(String id) throws ServiceException {
         log.info("getBook({}) begin", id);
         try {
             return LibraryFacade.getBook(id);

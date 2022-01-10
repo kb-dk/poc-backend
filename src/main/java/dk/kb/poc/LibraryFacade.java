@@ -14,7 +14,7 @@
  */
 package dk.kb.poc;
 
-import dk.kb.poc.model.v1.BookDto;
+import dk.kb.poc.model.v1.InternalBookDto;
 import dk.kb.poc.webservice.ExportWriter;
 import dk.kb.poc.webservice.exception.NotFoundServiceException;
 import org.slf4j.Logger;
@@ -36,10 +36,10 @@ public class LibraryFacade {
     private static final Logger log = LoggerFactory.getLogger(LibraryFacade.class);
 
     // Deleted books are represented with DELETED_BOOK
-    private static final Map<String, BookDto> books = new HashMap<>();
-    private static final BookDto DELETED_BOOK = new BookDto().id("___deleted___");
+    private static final Map<String, InternalBookDto> books = new HashMap<>();
+    private static final InternalBookDto DELETED_BOOK = new InternalBookDto().id("___deleted___");
 
-    public static synchronized BookDto addBook(BookDto book) {
+    public static synchronized InternalBookDto addBook(InternalBookDto book) {
         books.put(book.getId(), book);
         return book;
     }
@@ -54,15 +54,15 @@ public class LibraryFacade {
     }
 
 
-    public static BookDto getBook(String id) {
-        BookDto book = books.get(id);
+    public static InternalBookDto getBook(String id) {
+        InternalBookDto book = books.get(id);
         if (book == DELETED_BOOK) {
             throw new NotFoundServiceException("The book with id '" + id + "' was not available");
         }
         if (book != null) {
             return book;
         }
-        book = new BookDto()
+        book = new InternalBookDto()
                 .id(id)
                 .title("Random Book #" + new Random().nextInt(Integer.MAX_VALUE));
         books.put(id, book);
@@ -81,7 +81,7 @@ public class LibraryFacade {
         Random random = new Random();
         for (int i = 0 ; i < max - delivered.get() ; i++) {
             String id = Integer.toString(random.nextInt(Integer.MAX_VALUE));
-            BookDto book = new BookDto().id(id).title("Random Book #" + id + ", query=" + query);
+            InternalBookDto book = new InternalBookDto().id(id).title("Random Book #" + id + ", query=" + query);
             writer.write(book);
         }
     }

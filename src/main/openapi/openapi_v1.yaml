@@ -45,7 +45,11 @@ paths:
     get:
       tags:
         - '${project.name}'
-      summary: 'Retrieves metadata for a single book'
+      summary: |
+        Retrieves metadata for a single book'
+
+        Note that this simulates a library internal book representation, which includes the field 'secret',
+        only for consumption by trusted parties.
       operationId: getBook
       parameters:
         - name: id
@@ -62,7 +66,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/InternalBook'
         '404':
           description: 'Not found'
     delete:
@@ -102,20 +106,20 @@ paths:
            content:
              application/json:
                schema:
-                 $ref: '#/components/schemas/Book'
+                 $ref: '#/components/schemas/InternalBook'
       requestBody:
          description: 'Add or update a single book'
          required: true
          content:
            application/json:
              schema:
-               $ref: '#/components/schemas/Book'
+               $ref: '#/components/schemas/InternalBook'
            application/xml:
              schema:
-               $ref: '#/components/schemas/Book'
+               $ref: '#/components/schemas/InternalBook'
            application/x-www-form-urlencoded:
              schema:
-               $ref: '#/components/schemas/Book'
+               $ref: '#/components/schemas/InternalBook'
 
   # A demonstration of streaming delivery of arbitrary size
   # Also demonstrates different delivery formats (CVS, JSON, JSON-Lines)
@@ -123,7 +127,11 @@ paths:
     get:
       tags:
         - '${project.name}'
-      summary: 'Delivers metadata on books'
+      summary: |
+        Delivers metadata on books.
+
+        Note that this simulates a library internal book representation, which includes the field 'secret',
+        only for consumption by trusted parties.
       operationId: getBooks
       # We assume a very large response here: Too large for showing directly in the Swagger UI.
       # The Content-Disposition for "x-streamingOutput: true" is set to disable inline display in Swagger UI, but
@@ -178,7 +186,7 @@ paths:
                               large exports. Consider using application/x-ndjson instead'
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: '#/components/schemas/InternalBook'
             text/csv:
               schema:
                 description: 'Comma Separated Values, with strings quoted and newline as the string'
@@ -190,7 +198,7 @@ paths:
 components:
   schemas:
 
-    Book:
+    InternalBook:
       type: object
       required:
         - id
@@ -208,6 +216,10 @@ components:
           type: integer
           format: int32
           example: 43
+        secret:
+          type: string
+          description: 'Confidental internal information. Not for patrons'
+          example: 'Purchase cost'
 
     Error:
       type: object
