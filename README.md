@@ -25,10 +25,10 @@ Test the webservice with
 mvn jetty:run
 ```
 
-The default port is 8080 and the default Hello World service can be accessed at
+The port is 9060 and the default Hello World service can be accessed at
 <http://localhost:8080/poc-backend/v1/hello>
 
-The Swagger UI is available at <http://localhost:8080/poc-backend/api/>, providing access to both the `v1` and the 
+The Swagger UI is available at <http://localhost:9060/poc-backend/api/>, providing access to both the `v1` and the 
 `devel` versions of the GUI. 
 
 See the file [DEVELOPER.md](DEVELOPER.md) for developer specific details and how to deploy to tomcat.

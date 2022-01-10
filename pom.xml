@@ -58,7 +58,7 @@
         <dependency>
             <groupId>dk.kb.util</groupId>
             <artifactId>kb-util</artifactId>
-            <version>1.4.2</version>
+            <version>1.4.3</version>
             <exclusions>
                 <exclusion>
                     <!-- kb-util has 2.3.3, but transitive resolving has 2.4.0 somewhere-->
@@ -487,6 +487,9 @@
                         <descriptor>${project.build.finalName}/WEB-INF/web.xml</descriptor>
                         <jettyEnvXml>${project.basedir}/target/jetty-res/jetty-env.xml</jettyEnvXml>
                     </webApp>
+                    <httpConnector>
+                        <port>9060</port>
+                    </httpConnector>
                 </configuration>
             </plugin>
             <plugin>
