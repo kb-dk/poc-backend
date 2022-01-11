@@ -211,7 +211,7 @@ public class PocBackendApiServiceImpl implements PocBackendApi {
     public String ping() throws ServiceException {
         log.info("ping begin");
         try {
-            return "Pong";
+            return "Pong from backend";
         } catch (Exception e){
             throw handleException(e);
         } finally {
