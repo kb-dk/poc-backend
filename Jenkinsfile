@@ -54,7 +54,7 @@ openshift.withCluster() { // Use "default" cluster or fallback to OpenShift clus
                         stage("Create build and deploy application") {
                             openshift.newBuild("--strategy source", "--binary", "-i kb-infra/kb-s2i-tomcat90", "--name poc-backend")
                             openshift.startBuild("poc-backend", "--from-dir=.", "--follow")
-                            openshift.newApp("poc-backend:latest")
+                            openshift.newApp("poc-backend", "-e BUILD_NUMBER=latest")
                             openshift.create("route", "edge", "--service=poc-backend")
                         }
                     }
